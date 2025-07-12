@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D.A.V. PUBLIC SCHOOL, AURANGABAD(BIHAR)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Outfit:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add non-breaking spaces (\u00A0) to simulate blank gap at the end
+            let gap = "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"; // 8 blank spaces
+            let baseTitle = "D.A.V. PUBLIC SCHOOL- AURANGABAD(BIHAR)" + gap;
+            let pos = 0;
+
+            function scrollTitle() {
+                let scrolled = baseTitle.substring(pos) + baseTitle.substring(0, pos);
+                document.title = scrolled;
+                pos = (pos + 1) % baseTitle.length;
+                setTimeout(scrollTitle, 200); // speed
+            }
+
+            scrollTitle();
+        });
+
+        const filter = document.getElementById("filter");
+        const notices = document.querySelectorAll("#noticeList li");
+
+        filter.addEventListener("change", () => {
+            const value = filter.value;
+            notices.forEach(notice => {
+                if (value === "all" || notice.dataset.category === value) {
+                    notice.classList.remove("hidden");
+                } else {
+                    notice.classList.add("hidden");
+                }
+            });
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CHECK THIS WHETHER WORKING OR NOT,SMOOTH SCROLLING! */
+        html {
+            scroll-behavior: smooth;
+            /* smooth scrolling */
+        }
+
+        body {
+            animation: fadeInPage 1s ease-out;
+            font-family: 'Outfit', sans-serif;
+        }
+
+
+        .menu-link {
+            position: relative;
+            text-decoration: none;
+            color: white;
+            font-size: 15px;
+            font-family: 'Outfit', sans-serif;
+            padding-bottom: 6px;
+            /* enough space for underline */
+        }
+
+        /* Underline pseudo-element */
+        .menu-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            border-bottom: 2px dashed white;
+            opacity: 0;
+            transform: translateY(4px);
+            /* initial offset for smoother rise */
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+
+        /* On hover: fade + move underline in */
+        .menu-link:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+            /* slide into place */
+        }
+
+        #header-menu>li {
+            margin: 0 15px;
+            /* spacing between items */
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-family: 'Outfit', sans-serif;
+            padding-bottom: 6px;
+            position: relative;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            list-style: none;
+            padding: 10px 0;
+            margin: 2px;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border-radius: 0 20px 20px;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown li {
+            padding: 8px 20px;
+        }
+
+        .dropdown li a {
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+            display: block;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .dropdown li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .nav-link span.material-icons {
+            font-size: 18px;
+            vertical-align: middle;
+        }
+
+        #nav li {
+            list-style: none;
+        }
+
+        .notice-board {
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            padding: 30px;
+            margin: auto;
+        }
+
+        .notice-board h2 {
+            text-align: center;
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1a62d6;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .filter-section select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .notice-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notice-list li {
+            background: #f8faff;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-left: 5px solid #1a62d6;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .notice-list li:hover {
+            background: #eaf1ff;
+        }
+
+        .notice-date {
+            font-size: 13px;
+            color: #666;
+            margin-left: 20px;
+            white-space: nowrap;
+        }
+
+        .notice-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .notice-list::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .quick-links {
+            padding: 60px 5%;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .quick-links h2 {
+            font-size: 32px;
+            color: #1a62d6;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            justify-items: center;
+            align-items: stretch;
+        }
+
+
+
+        .quick-link-card {
+            background: transparent;
+            width: 100%;
+            max-width: 260px;
+            min-height: 180px;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .quick-link-card span {
+            font-size: 32px;
+            margin-bottom: 12px;
+            line-height: 1;
+            display: block;
+            text-align: center;
+        }
+
+        .quick-link-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+                .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            max-width: 600px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1a365d;
+        }
+        
+        .hero-title span {
+            color: #2b6cb0;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #4a5568;
+        }
+        
+        .btn-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .explore-btn {
+            position: relative;
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header"
+        style="display: flex; justify-content: flex-end; padding: 10px 20px; background-color: #1a62d6;">
+        <ul id="header-menu"
+            style="list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: row; align-items: center;">
+            <li><a href="https://davcmc.net.in/" class="menu-link" target="_blank">ABOUT DAVMC</a></li>
+            <li><a href="https://appsabha.org/" class="menu-link" target="_blank">ARYA SAMAJ</a></li>
+            <li><a href="https://davcmc.net.in/B46D2794-51B4-4B3A-95B8-46BB25875D74/CMS/Page/MESSAGE-OF-THE-PRESIDENT"
+                    class="menu-link" target="_blank">PRESIDENT'S MESSAGE</a></li>
+            <li><a href="https://www.youtube.com/user/DAVCMCVIDEOS" class="menu-link" target="_blank">DAVMC VIDEOS</a>
+            </li>
+            <li><a href="https://www.facebook.com/davunited" class="menu-link" target="_blank">ALUMNI</a></li>
+            <li><a href="https://ihub.davcmc.net.in/" class="menu-link" target="_blank">DAVMC INTELLECTUAL HUB</a></li>
+        </ul>
+    </div>
+
+    <div style="display: flex; padding: 10px; align-items: center; margin-left: 10vw;">
+        <a href="/"><img src="LOGO.png" alt="DAV LOGO" length="100" height="100" ; style="border-radius: 50%;"></a>
+
+        <div style="margin-left: 20px;">
+            <h1 style="margin: 0; font-family: 'Oswald', sans-serif; font-size: 35px;">DAV PUBLIC SCHOOL,
+                AURANGABAD(BIHAR)</h1>
+            <p style="margin: 0; font-size: 18px;">Managed by <a href="https://davcmc.net.in/" target="_blank"
+                    style="text-decoration: none; color: black;  padding-bottom: 3px;  border-bottom: 2px dotted black;">DAV
+                    College Managing Commitee</a></p>
+        </div>
+    </div>
+
+    <div>
+        <nav id="nav" style="background-color: #1a62d6; padding: 10px;">
+            <ul
+                style="padding: 0; margin: 0; display: flex; justify-content: space-evenly; align-items: center; width: 100%;">
+
+                <li class="nav-item"><a href="/about.html" class="nav-link">Home </a>
+                </li>
+
+                <li class="nav-item"><a href="/admission.html" class="nav-link">About Us <span
+                            class="material-icons">arrow_drop_down</span></a>
+                    <ul class="dropdown">
+                        <li><a href="#">About School</a></li>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Principal's Desk</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a href="/academics.html" class="nav-link">Academics <span
+                            class="material-icons">arrow_drop_down</span></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">History</a></li>
+                        <li><a href="#">Principal's Desk</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a href="/gallery.html" class="nav-link">Gallery <span
+                            class="material-icons">arrow_drop_down</span></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">History</a></li>
+                        <li><a href="#">Principal's Desk</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a href="/contact.html" class="nav-link">Student Area <span
+                            class="material-icons">arrow_drop_down</span></a>
+                    <ul class="dropdown">
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">History</a></li>
+                        <li><a href="#">Principal's Desk</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item"><a href="/help.html" class="nav-link">Need Help? <span
+                            class="material-icons">arrow_outward</span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="hero-section">
+        <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-subtitle">Welcome to</p>
+                <h1 class="hero-title">Dayanand Anglo Vedic <span>School</span></h1>
+                <p class="hero-description">
+                    Dayanand Anglo Vedic (DAV) institutions are rooted in the vision of Maharishi Dayanand Saraswati, blending Vedic values with modern education. Founded in the late 19th century, DAV schools have grown into one of India's largest educational networks, fostering discipline, integrity, and excellence. At DAV, we aim to build responsible citizens with strong moral character and a lifelong love for learning.
+                </p>
+                <div class="btn-container">
+                    <button class="explore-btn">Explore Campus </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+
+    <div style="display: flex;">
+        <div class="notice-board">
+            <h2>📢 Notice Board</h2>
+
+            <div class="filter-section">
+                <label for="filter" style="margin-right: 10px;">Filter:</label>
+                <select id="filter">
+                    <option value="all">All Notices</option>
+                    <option value="exam">Exams</option>
+                    <option value="event">Events</option>
+                    <option value="holiday">Holidays</option>
+                    <option value="general">General</option>
+                </select>
+            </div>
+
+            <ul class="notice-list" id="noticeList">
+                <li data-category="exam">
+                    📝 Half-Yearly Exams begin from 25th July.
+                    <span class="notice-date">Posted: 01 July 2025</span>
+                </li>
+                <li data-category="event">
+                    🏆 Annual Sports Day on 28th July.
+                    <span class="notice-date">Posted: 29 June 2025</span>
+                </li>
+                <li data-category="holiday">
+                    🎉 School will remain closed on 15th August for Independence Day.
+                    <span class="notice-date">Posted: 01 July 2025</span>
+                </li>
+                <li data-category="general">
+                    📢 New Time Table for Class 10 is now live.
+                    <span class="notice-date">Posted: 30 June 2025</span>
+                </li>
+                <li data-category="event">
+                    💡 Science Exhibition on 18th July in Auditorium.
+                    <span class="notice-date">Posted: 28 June 2025</span>
+                </li>
+            </ul>
+        </div>
+        <img src="teacher.png" alt="teacher_With_Stick">
+    </div>
+
+    <div>
+        <section class="quick-links">
+            <h2>🚀 Quick Access</h2>
+            <div class="quick-links-grid">
+                <a href="#" class="quick-link-card">
+                    <span>🎯</span>
+                    <h3>Our Vision & Mission</h3>
+                </a>
+                <a href="#" class="quick-link-card">
+                    <span>📘</span>
+                    <h3>Student & Parent Handbook</h3>
+                </a>
+                <a href="#" class="quick-link-card">
+                    <span>💳</span>
+                    <h3>Online Fee Payment</h3>
+                </a>
+                <a href="#" class="quick-link-card">
+                    <span>🧑‍🏫</span>
+                    <h3>Message from the Principal</h3>
+                </a>
+            </div>
+        </section>
+    </div>
+    <!-- <h1>D.A.V. PUBLIC SCHOOL, AURANGABAD(BIHAR)</h1>
+    <p>Welcome to the official website of D.A.V. Public School, Aurangabad (Bihar).</p>
+    <p>Stay tuned for updates and information.</p>
+    <footer>
+        <p>&copy; 2023 D.A.V. Public School, Aurangabad (Bihar). All rights reserved.</p>
+    </footer> -->
+</body>
+
+</html>

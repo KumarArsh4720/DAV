@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAV School - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            max-width: 600px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1a365d;
+        }
+        
+        .hero-title span {
+            color: #2b6cb0;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #4a5568;
+        }
+        
+        .btn-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .explore-btn {
+            position: relative;
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #4299e1;
+            border-radius: 50px;
+            z-index: 1;
+            transform: translateX(-100%);
+        }
+        
+        .btn-bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .bubble {
+            position: absolute;
+            background-color: #3182ce;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-subtitle">Welcome to</p>
+                <h1 class="hero-title">Dayanand Anglo Vedic <span>School</span></h1>
+                <p class="hero-description">
+                    Dayanand Anglo Vedic (DAV) institutions are rooted in the vision of Maharishi Dayanand Saraswati, blending Vedic values with modern education. Founded in the late 19th century, DAV schools have grown into one of India's largest educational networks, fostering discipline, integrity, and excellence. At DAV, we aim to build responsible citizens with strong moral character and a lifelong love for learning.
+                </p>
+                <div class="btn-container">
+                    <button class="explore-btn">Explore Campus</button>
+                    <div class="btn-bg"></div>
+                    <div class="btn-bubbles"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.explore-btn');
+            const btnContainer = document.querySelector('.btn-container');
+            const btnBg = document.querySelector('.btn-bg');
+            const btnBubbles = document.querySelector('.btn-bubbles');
+            
+            let hoverTimeout;
+            let animationInProgress = false;
+            
+            // Create bubbles element
+            function createBubbles() {
+                btnBubbles.innerHTML = '';
+                for (let i = 0; i < 4; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('bubble');
+                    bubble.style.width = `${5 + Math.random() * 10}px`;
+                    bubble.style.height = bubble.style.width;
+                    bubble.style.left = `${-20 - (Math.random() * 20)}px`;
+                    bubble.style.top = `${10 + (Math.random() * 20)}px`;
+                    btnBubbles.appendChild(bubble);
+                }
+            }
+            
+            btnContainer.addEventListener('mouseenter', function() {
+                if (animationInProgress) return;
+                
+                createBubbles();
+                animationInProgress = true;
+                
+                // Animate bubbles
+                const bubbles = document.querySelectorAll('.bubble');
+                gsap.to(bubbles, {
+                    x: 30 + Math.random() * 20,
+                    y: -10 + Math.random() * 20,
+                    opacity: 0.7,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    stagger: 0.1,
+                    onComplete: animateWaveIn
+                });
+                
+                function animateWaveIn() {
+                    gsap.to(btnBg, {
+                        x: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            animationInProgress = false;
+                            btn.style.color = 'white';
+                        }
+                    });
+                }
+            });
+            
+            btnContainer.addEventListener('mouseleave', function() {
+                if (animationInProgress) {
+                    // If animation is in progress, make the color "leak" down
+                    gsap.to(btnBg, {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: resetButton
+                    });
+                    return;
+                }
+                
+                animationInProgress = true;
+                btn.style.color = '#2d3748';
+                
+                gsap.to(btnBg, {
+                    x: '100%',
+                    duration: 0.8,
+                    ease: "power2.in",
+                    onComplete: resetButton
+                });
+                
+                function resetButton() {
+                    gsap.to(btnBg, {
+                        x: '-100%',
+                        y: 0,
+                        opacity: 1,
+                        duration: 0,
+                        onComplete: () => {
+                            animationInProgress = false;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
